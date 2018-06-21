@@ -50,8 +50,8 @@ public class Vehicle {
         isDefaultModel = defaultModel;
     }
 
-    enum CarModel {
-        TRUCK, RV, CAR
+    public enum CarModel {
+        TRUCK, RV, CAR, UNDEFINED
     }
 
     private String vehicleReferenceNumber;
