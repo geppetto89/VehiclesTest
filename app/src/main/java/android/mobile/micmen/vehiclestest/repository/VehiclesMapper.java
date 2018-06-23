@@ -13,7 +13,13 @@ public class VehiclesMapper implements Mapper<VehiclesResponse, List<Vehicle>> {
     public List<Vehicle> map(VehiclesResponse response) {
         List<Vehicle> list = new ArrayList<>();
         for (android.mobile.micmen.vehiclestest.network.dto.Vehicle vehicle : response.getVehicles()) {
-            list.add(new Vehicle(vehicle.getVrn(), VehiclesUtils.getVehichleTypeByName(vehicle.getType()), vehicle.getColor(), vehicle.getCountry(), vehicle.getDefault()));
+            list.add(new Vehicle(
+                    vehicle.getVehicleId(),
+                    vehicle.getVrn(),
+                    VehiclesUtils.getVehichleTypeByName(vehicle.getType()),
+                    vehicle.getColor(),
+                    vehicle.getCountry(),
+                    vehicle.getDefault()));
         }
         return list;
     }

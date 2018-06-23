@@ -19,6 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+            android:name=".features.vehicles.VehiclesDetailActivity"
+            />
     </application>
 
 </manifest>

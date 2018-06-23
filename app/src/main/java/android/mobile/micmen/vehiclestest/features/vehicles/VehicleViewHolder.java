@@ -15,6 +15,8 @@ public class VehicleViewHolder extends RecyclerView.ViewHolder implements View.O
     public VehicleViewHolder(View itemView, OnVehicleClickListener listener) {
         super(itemView);
         vehicleName = itemView.findViewById(R.id.vehicles_name);
+        vehicleClickListener = listener;
+        itemView.setOnClickListener(this);
     }
 
     public void onBind(Vehicle vehicle) {

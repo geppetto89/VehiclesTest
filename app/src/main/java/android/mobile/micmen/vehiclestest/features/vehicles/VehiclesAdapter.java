@@ -18,6 +18,16 @@ public class VehiclesAdapter extends RecyclerView.Adapter<VehicleViewHolder>{
 
     public VehiclesAdapter(List<Vehicle> vehicles) {
         this.vehicles = vehicles;
+        notifyDataSetChanged();
+    }
+
+    public VehiclesAdapter(OnVehicleClickListener vehicleClickListener) {
+        this.vehicleClickListener = vehicleClickListener;
+    }
+
+    public void setVehicles(List<Vehicle> vehicles) {
+        this.vehicles = vehicles;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -37,6 +47,9 @@ public class VehiclesAdapter extends RecyclerView.Adapter<VehicleViewHolder>{
 
     @Override
     public int getItemCount() {
+        if (vehicles == null) {
+            return 0;
+        }
         return vehicles.size();
     }
 

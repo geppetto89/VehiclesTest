@@ -1,8 +1,32 @@
 package android.mobile.micmen.vehiclestest.model;
 
-public class Vehicle {
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    public Vehicle(String vehicleReferenceNumber, CarModel carModel, String colorName, String country, boolean isDefaultModel) {
+public class Vehicle implements Parcelable {
+
+    private long id;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    private String vehicleReferenceNumber;
+
+    private CarModel carModel;
+
+    private String colorName;
+
+    private String country;
+
+    private boolean isDefaultModel;
+
+    public Vehicle(long id, String vehicleReferenceNumber, CarModel carModel, String colorName, String country, boolean isDefaultModel) {
+        this.id = id;
         this.vehicleReferenceNumber = vehicleReferenceNumber;
         this.carModel = carModel;
         this.colorName = colorName;
@@ -54,16 +78,41 @@ public class Vehicle {
         TRUCK, RV, CAR, UNDEFINED
     }
 
-    private String vehicleReferenceNumber;
 
-    private CarModel carModel;
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-    private String colorName;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.id);
+        dest.writeString(this.vehicleReferenceNumber);
+        dest.writeInt(this.carModel == null ? -1 : this.carModel.ordinal());
+        dest.writeString(this.colorName);
+        dest.writeString(this.country);
+        dest.writeByte(this.isDefaultModel ? (byte) 1 : (byte) 0);
+    }
 
-    private String country;
+    protected Vehicle(Parcel in) {
+        this.id = in.readLong();
+        this.vehicleReferenceNumber = in.readString();
+        int tmpCarModel = in.readInt();
+        this.carModel = tmpCarModel == -1 ? null : CarModel.values()[tmpCarModel];
+        this.colorName = in.readString();
+        this.country = in.readString();
+        this.isDefaultModel = in.readByte() != 0;
+    }
 
-    private boolean isDefaultModel;
+    public static final Parcelable.Creator<Vehicle> CREATOR = new Parcelable.Creator<Vehicle>() {
+        @Override
+        public Vehicle createFromParcel(Parcel source) {
+            return new Vehicle(source);
+        }
 
-
-
+        @Override
+        public Vehicle[] newArray(int size) {
+            return new Vehicle[size];
+        }
+    };
 }

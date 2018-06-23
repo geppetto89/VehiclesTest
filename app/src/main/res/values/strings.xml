@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">VehiclesTest</string>
+    <string name="vehicle_id">Vehicle id: %s</string>
+    <string name="vehicles_vrn">Vehicle vrn: %s</string>
+    <string name="vehicles_color">Vehicle country: %s</string>
+    <string name="vehicles_country">Vehicle color: %s</string>
+    <string name="vehicles_type">Vehicle type: %s</string>
+    <string name="vehicle_customized">Is default model: %s</string>
 </resources>

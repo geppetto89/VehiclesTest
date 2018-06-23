@@ -1,8 +1,11 @@
 package android.mobile.micmen.vehiclestest.features.vehicles;
 
-import android.app.Activity;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.mobile.micmen.vehiclestest.R;
+import android.mobile.micmen.vehiclestest.core.Resource;
+import android.mobile.micmen.vehiclestest.model.Vehicle;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -11,12 +14,34 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import java.util.List;
+
 public class VehiclesActivity extends FragmentActivity {
 
     private RecyclerView recyclerView;
     private VehiclesAdapter vehiclesAdapter;
     private ProgressBar progressBar;
     private VehiclesViewModel vehiclesViewModel;
+
+   private Observer<Resource<List<Vehicle>>> resourceObserver = vehicles -> {
+        if (vehicles != null) {
+            switch (vehicles.getStatus()) {
+                case SUCCESS:
+                    hideLoader();
+                    vehiclesAdapter.setVehicles(vehicles.getData());
+                    break;
+                case ERROR:
+                    hideLoader();
+                    break;
+                case LOADING:
+                    showLoader();
+                    break;
+                case EMPTY:
+                    //
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,28 +57,13 @@ public class VehiclesActivity extends FragmentActivity {
     private void retrieveVechiles() {
         vehiclesViewModel.getVehicles();
         vehiclesViewModel.getVehiclesLiveData().observe(this,
-                vehicles -> {
-                    if(vehicles!=null) {
-                        switch (vehicles.getStatus()) {
-                            case SUCCESS:
-                                recyclerView.setAdapter(new VehiclesAdapter(vehicles.getData()));
-                                break;
-                            case ERROR:
-                                hideLoader();
-                                break;
-                            case LOADING:
-                                showLoader();
-                                break;
-                            case EMPTY:
-                                //
-                                break;
-                        }
-                    }
-                });
+                resourceObserver);
     }
 
     private void setUi() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        vehiclesAdapter = new VehiclesAdapter(vehicleClickListener);
+        recyclerView.setAdapter(vehiclesAdapter);
     }
 
     private void showLoader() {
@@ -64,4 +74,10 @@ public class VehiclesActivity extends FragmentActivity {
         progressBar.setVisibility(View.GONE);
     }
 
+    private OnVehicleClickListener vehicleClickListener = vehicle -> {
+        Intent intent = new Intent();
+        intent.setClass(this, VehiclesDetailActivity.class);
+        intent.putExtra(VehiclesDetailActivity.EXTRA_VEHICLE, vehicle);
+        startActivity(intent);
+    };
 }
