@@ -28,6 +28,8 @@ public class VehiclesViewModel extends ViewModel {
     }
 
     public void getVehicles(){
+        vehiclesResource.setStatus(Resource.Status.LOADING);
+        vehiclesLiveData.setValue(vehiclesResource);
         compositeDisposable.add(vehiclesRepository
                 .getVehicles()
                 .observeOn(AndroidSchedulers.mainThread())

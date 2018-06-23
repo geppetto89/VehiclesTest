@@ -11,8 +11,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
+
 
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class VehiclesActivity extends FragmentActivity {
     private VehiclesAdapter vehiclesAdapter;
     private ProgressBar progressBar;
     private VehiclesViewModel vehiclesViewModel;
+    private Toolbar toolbar;
 
    private Observer<Resource<List<Vehicle>>> resourceObserver = vehicles -> {
         if (vehicles != null) {
@@ -50,6 +53,7 @@ public class VehiclesActivity extends FragmentActivity {
         vehiclesViewModel = ViewModelProviders.of(this).get(VehiclesViewModel.class);
         recyclerView = findViewById(R.id.vehicles_list);
         progressBar = findViewById(R.id.progress_bar);
+        toolbar = findViewById(R.id.toolbar);
         setUi();
         retrieveVechiles();
     }
@@ -61,6 +65,7 @@ public class VehiclesActivity extends FragmentActivity {
     }
 
     private void setUi() {
+        toolbar.setTitle(getString(R.string.vehicle_activity_title));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         vehiclesAdapter = new VehiclesAdapter(vehicleClickListener);
         recyclerView.setAdapter(vehiclesAdapter);
@@ -71,7 +76,7 @@ public class VehiclesActivity extends FragmentActivity {
     }
 
     private void hideLoader() {
-        progressBar.setVisibility(View.GONE);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     private OnVehicleClickListener vehicleClickListener = vehicle -> {
