@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class VehiclesActivity extends FragmentActivity {
     private ProgressBar progressBar;
     private VehiclesViewModel vehiclesViewModel;
     private Toolbar toolbar;
+    private TextView errorTextView;
 
    private Observer<Resource<List<Vehicle>>> resourceObserver = vehicles -> {
         if (vehicles != null) {
@@ -35,6 +37,7 @@ public class VehiclesActivity extends FragmentActivity {
                     break;
                 case ERROR:
                     hideLoader();
+                    errorTextView.setVisibility(View.VISIBLE);
                     break;
                 case LOADING:
                     showLoader();
@@ -54,6 +57,7 @@ public class VehiclesActivity extends FragmentActivity {
         recyclerView = findViewById(R.id.vehicles_list);
         progressBar = findViewById(R.id.progress_bar);
         toolbar = findViewById(R.id.toolbar);
+        errorTextView = findViewById(R.id.error_textView);
         setUi();
         retrieveVechiles();
     }

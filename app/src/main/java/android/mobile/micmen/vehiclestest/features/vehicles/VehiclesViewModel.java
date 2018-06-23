@@ -40,6 +40,7 @@ public class VehiclesViewModel extends ViewModel {
                 }, throwable -> {
                     vehiclesResource.setThrowable(throwable);
                     vehiclesResource.setStatus(Resource.Status.ERROR);
+                    vehiclesLiveData.setValue(vehiclesResource);
                 }));
     }
 

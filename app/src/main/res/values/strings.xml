@@ -8,4 +8,5 @@
     <string name="vehicle_customized">Is default model: %s</string>
     <string name="vehicle_activity_title">Vehicles</string>
     <string name="vehicle_detail_activity_title">Vehicle\'s details</string>
+    <string name="error_occured">An error occurred</string>
 </resources>
