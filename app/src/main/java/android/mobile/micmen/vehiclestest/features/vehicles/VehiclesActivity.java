@@ -61,8 +61,7 @@ public class VehiclesActivity extends FragmentActivity {
 
     private void retrieveVehicles() {
         vehiclesViewModel.getVehicles();
-        vehiclesViewModel.getVehiclesLiveData().observe(this,
-                resourceObserver);
+        vehiclesViewModel.getVehiclesLiveData().observe(this, resourceObserver);
     }
 
     private void setUi() {

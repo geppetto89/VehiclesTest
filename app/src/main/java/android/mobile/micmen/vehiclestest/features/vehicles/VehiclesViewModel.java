@@ -16,12 +16,14 @@ public class VehiclesViewModel extends ViewModel {
 
     private VehiclesRepository vehiclesRepository;
     private MutableLiveData<Resource<List<Vehicle>>> vehiclesLiveData;
-    private Resource<List<Vehicle>> vehiclesResource = new Resource<>(Resource.Status.EMPTY, null, null);
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private Resource<List<Vehicle>> vehiclesResource;
+    private CompositeDisposable compositeDisposable;
 
     public VehiclesViewModel() {
         vehiclesRepository = VehiclesApplication.getInstance().getManager().getVehiclesRepository();
         vehiclesLiveData = new MutableLiveData<>();
+        vehiclesResource = new Resource<>(Resource.Status.EMPTY, null, null);
+        compositeDisposable = new CompositeDisposable();
     }
 
     public VehiclesRepository getVehiclesRepository() {
@@ -36,7 +38,7 @@ public class VehiclesViewModel extends ViewModel {
         return vehiclesLiveData;
     }
 
-    public void getVehicles(){
+    public void getVehicles() {
         vehiclesResource.setStatus(Resource.Status.LOADING);
         vehiclesLiveData.setValue(vehiclesResource);
         compositeDisposable.add(vehiclesRepository

@@ -1,45 +1,25 @@
 package android.mobile.micmen.vehiclestest;
 
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.mobile.micmen.vehiclestest.core.Resource;
 import android.mobile.micmen.vehiclestest.features.vehicles.VehiclesActivity;
 import android.mobile.micmen.vehiclestest.features.vehicles.VehiclesViewModel;
-import android.mobile.micmen.vehiclestest.model.Vehicle;
 import android.mobile.micmen.vehiclestest.repository.VehiclesRepositoryImpl;
-import android.support.annotation.Nullable;
 import android.support.test.annotation.UiThreadTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import junit.framework.Assert;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import io.reactivex.Observable;
 import io.reactivex.observers.TestObserver;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @RunWith(AndroidJUnit4.class)
 public class VehicleViewModelTest {
@@ -62,8 +42,16 @@ public class VehicleViewModelTest {
         observer.assertComplete();
     }
 
+    @Test
+    public void testSuccessStateAfter5Seconds() throws InterruptedException {
+        VehiclesViewModel viewModel = ViewModelProviders.of(mActivityRule.getActivity()).get(VehiclesViewModel.class);
+        TestObserver observer = new TestObserver();
+        observer.await(5, TimeUnit.SECONDS);
+        Assert.assertTrue(viewModel.getVehiclesLiveData().getValue().getStatus() == Resource.Status.SUCCESS);
+    }
+
     @Test @UiThreadTest
-    public void testSucess(){
+    public void testSuccessOnVehiclesConsumerWithListRetrieved(){
         VehiclesViewModel viewModel = ViewModelProviders.of(mActivityRule.getActivity()).get(VehiclesViewModel.class);
         TestObserver observer = new TestObserver();
         VehiclesRepositoryImpl vehiclesRepository = mock(VehiclesRepositoryImpl.class);
@@ -75,7 +63,7 @@ public class VehicleViewModelTest {
     }
 
     @Test @UiThreadTest
-    public void testError(){
+    public void testErrorOnVehiclesConsumerWithAnException(){
         VehiclesViewModel viewModel = ViewModelProviders.of(mActivityRule.getActivity()).get(VehiclesViewModel.class);
         TestObserver observer = new TestObserver();
         VehiclesRepositoryImpl vehiclesRepository = mock(VehiclesRepositoryImpl.class);
@@ -86,5 +74,4 @@ public class VehicleViewModelTest {
         viewModel.getVehicles();
         observer.assertError(exception);
     }
-
 }
