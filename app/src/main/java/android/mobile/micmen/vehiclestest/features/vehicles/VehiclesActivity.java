@@ -56,10 +56,10 @@ public class VehiclesActivity extends FragmentActivity {
         toolbar = findViewById(R.id.toolbar);
         errorTextView = findViewById(R.id.error_textView);
         setUi();
-        retrieveVechiles();
+        retrieveVehicles();
     }
 
-    private void retrieveVechiles() {
+    private void retrieveVehicles() {
         vehiclesViewModel.getVehicles();
         vehiclesViewModel.getVehiclesLiveData().observe(this,
                 resourceObserver);

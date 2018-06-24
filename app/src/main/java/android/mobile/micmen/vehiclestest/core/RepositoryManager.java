@@ -1,7 +1,7 @@
 package android.mobile.micmen.vehiclestest.core;
 
 import android.mobile.micmen.vehiclestest.network.ServiceFactory;
-import android.mobile.micmen.vehiclestest.network.ServiceFatctoryImpl;
+import android.mobile.micmen.vehiclestest.network.ServiceFactoryImpl;
 import android.mobile.micmen.vehiclestest.network.VehicleService;
 import android.mobile.micmen.vehiclestest.repository.VehiclesRepositoryImpl;
 
@@ -11,7 +11,7 @@ public class RepositoryManager {
     public static final String BASE_URL = "http://private-6d86b9-vehicles5.apiary-mock.com/";
 
     public RepositoryManager() {
-        this.serviceFactory = new ServiceFatctoryImpl(BASE_URL);
+        this.serviceFactory = new ServiceFactoryImpl(BASE_URL);
     }
 
     public void setServiceFactory(ServiceFactory serviceFactory) {

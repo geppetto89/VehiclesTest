@@ -11,11 +11,11 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ServiceFatctoryImpl implements ServiceFactory {
+public class ServiceFactoryImpl implements ServiceFactory {
 
     private Retrofit retrofit;
 
-    public ServiceFatctoryImpl(String baseUrl) {
+    public ServiceFactoryImpl(String baseUrl) {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()

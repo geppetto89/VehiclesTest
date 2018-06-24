@@ -4,7 +4,6 @@ import android.mobile.micmen.vehiclestest.model.Vehicle;
 
 public class VehiclesUtils {
 
-
     public static Vehicle.CarModel getVehichleTypeByName(String vr) {
         switch (vr) {
             case "Truck":

@@ -16,11 +16,6 @@ public class VehiclesAdapter extends RecyclerView.Adapter<VehicleViewHolder>{
     private OnVehicleClickListener vehicleClickListener;
 
 
-    public VehiclesAdapter(List<Vehicle> vehicles) {
-        this.vehicles = vehicles;
-        notifyDataSetChanged();
-    }
-
     public VehiclesAdapter(OnVehicleClickListener vehicleClickListener) {
         this.vehicleClickListener = vehicleClickListener;
     }
@@ -35,10 +30,6 @@ public class VehiclesAdapter extends RecyclerView.Adapter<VehicleViewHolder>{
     public VehicleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.vehicle_element, parent, false);
         return new VehicleViewHolder(inflate, vehicleClickListener);
-    }
-
-    public void setVehicleClickListener(OnVehicleClickListener vehicleClickListener) {
-        this.vehicleClickListener = vehicleClickListener;
     }
 
     public void onBindViewHolder(@NonNull VehicleViewHolder holder, int position) {

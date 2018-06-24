@@ -19,7 +19,6 @@ public class VehiclesViewModel extends ViewModel {
     private Resource<List<Vehicle>> vehiclesResource = new Resource<>(Resource.Status.EMPTY, null, null);
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-
     public VehiclesViewModel() {
         vehiclesRepository = VehiclesApplication.getInstance().getManager().getVehiclesRepository();
         vehiclesLiveData = new MutableLiveData<>();
