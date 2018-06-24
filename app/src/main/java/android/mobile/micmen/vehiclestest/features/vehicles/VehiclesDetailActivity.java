@@ -38,13 +38,19 @@ public class VehiclesDetailActivity extends FragmentActivity {
         }
     }
 
-    private void setUI(){
+    private void setUI() {
         toolbar.setTitle(getResources().getString(R.string.vehicle_detail_activity_title));
         textViewId.setText(String.format(getResources().getString(R.string.vehicle_id), String.valueOf(vehicle.getId())));
         textViewVrn.setText(String.format(getResources().getString(R.string.vehicles_vrn), vehicle.getVehicleReferenceNumber()));
-        textViewCountry.setText(String.format(getResources().getString(R.string.vehicles_country), vehicle.getCountry()));
-        textViewColor.setText(String.format(getResources().getString(R.string.vehicles_color), vehicle.getColorName()));
+        if (vehicle.getCountry() != null) {
+            textViewCountry.setText(String.format(getResources().getString(R.string.vehicles_country), vehicle.getCountry()));
+        }
+        if (vehicle.getColorName() != null) {
+            textViewColor.setText(String.format(getResources().getString(R.string.vehicles_color), vehicle.getColorName()));
+        }
+        if (vehicle.getCarModel() != null) {
         textViewType.setText(String.format(getResources().getString(R.string.vehicles_type), vehicle.getCarModel().name()));
+        }
         textViewDefault.setText(String.format(getResources().getString(R.string.vehicle_customized), String.valueOf(vehicle.isDefaultModel())));
     }
 }
