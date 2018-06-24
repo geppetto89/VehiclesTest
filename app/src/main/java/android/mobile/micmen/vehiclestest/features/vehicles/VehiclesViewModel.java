@@ -15,12 +15,22 @@ import io.reactivex.disposables.CompositeDisposable;
 public class VehiclesViewModel extends ViewModel {
 
     private VehiclesRepository vehiclesRepository;
-    private MutableLiveData<Resource<List<Vehicle>>> vehiclesLiveData = new MutableLiveData<>();
+    private MutableLiveData<Resource<List<Vehicle>>> vehiclesLiveData;
     private Resource<List<Vehicle>> vehiclesResource = new Resource<>(Resource.Status.EMPTY, null, null);
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
+
     public VehiclesViewModel() {
         vehiclesRepository = VehiclesApplication.getInstance().getManager().getVehiclesRepository();
+        vehiclesLiveData = new MutableLiveData<>();
+    }
+
+    public VehiclesRepository getVehiclesRepository() {
+        return vehiclesRepository;
+    }
+
+    public void setVehiclesRepository(VehiclesRepository vehiclesRepository) {
+        this.vehiclesRepository = vehiclesRepository;
     }
 
     public LiveData<Resource<List<Vehicle>>> getVehiclesLiveData() {
@@ -34,12 +44,12 @@ public class VehiclesViewModel extends ViewModel {
                 .getVehicles()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(vehicles -> {
-                    vehiclesResource.setData(vehicles);
                     vehiclesResource.setStatus(Resource.Status.SUCCESS);
+                    vehiclesResource.setData(vehicles);
                     vehiclesLiveData.setValue(vehiclesResource);
                 }, throwable -> {
-                    vehiclesResource.setThrowable(throwable);
                     vehiclesResource.setStatus(Resource.Status.ERROR);
+                    vehiclesResource.setThrowable(throwable);
                     vehiclesLiveData.setValue(vehiclesResource);
                 }));
     }

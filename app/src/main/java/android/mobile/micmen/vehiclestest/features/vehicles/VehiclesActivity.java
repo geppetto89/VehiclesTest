@@ -42,9 +42,6 @@ public class VehiclesActivity extends FragmentActivity {
                 case LOADING:
                     showLoader();
                     break;
-                case EMPTY:
-                    //
-                    break;
             }
         }
     };

@@ -14,6 +14,10 @@ public class RepositoryManager {
         this.serviceFactory = new ServiceFatctoryImpl(BASE_URL);
     }
 
+    public void setServiceFactory(ServiceFactory serviceFactory) {
+        this.serviceFactory = serviceFactory;
+    }
+
     public VehiclesRepositoryImpl getVehiclesRepository(){
         VehicleService service = serviceFactory.makeService(VehicleService.class);
         return new VehiclesRepositoryImpl(service);
